@@ -1,49 +1,32 @@
-# import flask dependencies
-import requests
+# import libraries
 import json
-from flask import Flask, jsonify, request
-from df_response_lib import fulfillment_response
 
-fulfillment_client = fulfillment_response()
+# import flask dependencies
+from flask import Flask, jsonify, request
+
+# import response functions for intent requests
+from fetch import handle_available_doctors, handle_key_error
 
 # initialize the flask app
 app = Flask(__name__)
 
-# default route
-base_url = 'http://2019.almafiesta.com/testing2019/html/ContactFrom_v11/'
-
-
-def handle_available_doctors():
-    endpoint = base_url + 'availableDoctor.php'
-    resp = json.loads(requests.get(endpoint).text)
-    result = ""
-    for doctor in resp['data']:
-        result = result + doctor['name']
-
-    res = {
-        'speech': result,
-        'displayText': result,
-        'source': 'server'
-    }
-
-    return jsonify(res)
-
-
+# Default route for homepage
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    fulfillment_text = fulfillment_client.fulfillment_text("Test Test!")
-    # return jsonify(fulfillment_client.main_response(fulfillment_text, fulfillment_messages=None, output_contexts=None, followup_event_input=None))
-    return "Hello"
-# create a route for webhook
+    return "Hello World! This is fulfillment server for SwayamSevak."
 
-
+# Route for Dialogflow webhook (Only support POST requests)
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    d = json.loads(request.data)
-    intentName = d['result']['metadata']['intentName']
+    content = json.loads(request.data)
+
+    try:
+        intentName = content['result']['metadata']['intentName']
+    except KeyError as e:
+        return jsonify(handle_key_error(e))
 
     if (intentName == 'available_doctors'):
-        return handle_available_doctors()
+        return jsonify(handle_available_doctors())
 
 
 # run the app
