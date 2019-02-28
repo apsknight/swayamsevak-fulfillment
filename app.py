@@ -5,7 +5,7 @@ import json
 from flask import Flask, jsonify, request
 
 # import response functions for intent requests
-from fetch import handle_available_doctors, handle_key_error
+from fetch import *
 
 # initialize the flask app
 app = Flask(__name__)
@@ -20,14 +20,17 @@ def index():
 def webhook():
     content = json.loads(request.data)
 
+    print (content)
+
     try:
         intentName = content['result']['metadata']['intentName']
     except KeyError as e:
         return jsonify(handle_key_error(e))
 
-    if (intentName == 'available_doctors'):
-        return jsonify(handle_available_doctors())
-
+    if intentName == 'Doctors':
+        return jsonify(handle_all_doctors())
+    elif intentName == 'GetSchedule':
+    	return jsonify(handle_schedule_doctors(content['result']['metadata']['intentName']))
 
 # run the app
 if __name__ == '__main__':
