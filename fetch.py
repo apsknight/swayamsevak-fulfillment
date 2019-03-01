@@ -20,7 +20,9 @@ def handle_key_error(error):
     pass
 
 def handle_status_error():
-    pass
+    return{
+        "speech": "I could not find what you were looking for."
+    }
 
 # Method for returning carousel containing details of all available doctors.
 def handle_all_doctors():
@@ -31,7 +33,6 @@ def handle_all_doctors():
         return handle_status_error()
 
     template = {
-        "speech": "These are the doctors available, do you want to know the schedule of a particular doctor?"
         "messages": [{
             "type": "carousel_card",
             "items": [
@@ -42,6 +43,7 @@ def handle_all_doctors():
     for item in response['data']:
         data = {
             "heading": item['name'],
+            "status": item['status'],
             "title1": "Phone: "+item['phone'],
             "title2": "Room: "+item['room']
         }
@@ -103,6 +105,7 @@ def handle_all_Beds():
     for item in response['data']:
         data = {
             "heading": item['roomtype'],
+            "status": item['status'],
             "title1": "BedNo: "+item['bedno'],
             "title2": "Charges: "+item['charges']
         }
@@ -118,7 +121,7 @@ def handle_patient_appointments(name):
         return handle_status_error()
 
     template = {
-        "speech": "Your id is "+response['data'][0]['id']+"and appointment is on "+response['data'][0]['date']
+        "speech": "Your id is "+response['data'][0]['id']+"and appointment is on "+response['data'][0]['date']+" with doctor "+
     }
 
     return template
@@ -161,6 +164,7 @@ def handle_department_doctors(dept):
     for item in response['data']:
         data = {
             "heading": item['name'],
+            "status": item['status'],
             "title1": "Phone: "+item['phone'],
             "title2": "Room: "+item['room']
         }
@@ -208,7 +212,7 @@ def handle_schedule_doctors(name):
         return handle_status_error()
 
     template = {
-        "speech": response['data'][0]['name']+" is available on the following days",
+        # "speech": response['data'][0]['name']+" is available on the following days",
         "messages": [{
             "type": "carousel_card",
             "items": [
@@ -216,36 +220,66 @@ def handle_schedule_doctors(name):
         }]
     }  
 
-    for item in response['data'][0]['schedule']:
-        if 'monday' in item:
-            data = {
-                "heading": "Monday",
-                "title1": "Phone: "+item['monday']
-            }
-        elif 'tuesday' in item:
-               data = {
-                "heading": "Tuesday",
-                "title1": "Phone: "+item['tuesday']
-            }
-        elif 'wednesday' in item:
-               data = {
-                "heading": "Wednesday",
-                "title1": "Phone: "+item['wednesday']
-            }            
-        elif 'thursday' in item:
-               data = {
-                "heading": "Thursday",
-                "title1": "Phone: "+item['thursday']
-            }
-        elif 'friday' in item:
-               data = {
-                "heading": "Friday",
-                "title1": "Phone: "+item['friday']
-            }
-
-        else:
-            data={}
-
+    item = response['data'][0]['schedule']
+    if item['monday']!='0':
+        data = {
+            "heading": "Monday",
+            "title1": "Timings: "+item['monday']
+        }
         template['messages'][0]['items'].append(data)
+    if item['tuesday']!='0':
+        data = {
+            "heading": "Tuesday",
+            "title1": "Timings: "+item['tuesday']
+        }
+        template['messages'][0]['items'].append(data)
+    if item['wednesday']!='0':
+        data = {
+            "heading": "Wednesday",
+            "title1": "Timings: "+item['wednesday']
+        } 
+        template['messages'][0]['items'].append(data)           
+    if item['thursday']!='0':
+        data = {
+            "heading": "Thursday",
+            "title1": "Timings: "+item['thursday']
+        }
+        template['messages'][0]['items'].append(data) 
+    if item['friday']!='0':
+        data = {
+            "heading": "Friday",
+            "title1": "Timings: "+item['friday']
+        }
+        template['messages'][0]['items'].append(data) 
+    if item['saturday']!='0':
+        data = {
+            "heading": "Saturday",
+            "title1": "Timings: "+item['saturday']
+        }
+        template['messages'][0]['items'].append(data) 
+    if item['sunday']!='0':
+        data = {
+            "heading": "Sunday",
+            "title1": "Timings: "+item['sunday']
+        }
+        template['messages'][0]['items'].append(data) 
+    else:
+        data={}
+
+    template['messages'][0]['items'].append(data)
 
     return template 
+
+def handle_video_call():
+
+    template = {
+        "messages": [{
+            "type": "basic_card",
+            "title": "Customer Support",
+            "button": {
+                "title": "Call",
+                "uri": "https://18.223.16.181:4443/?call=1220&number=20"
+            }
+        }]
+    }     
+    return template

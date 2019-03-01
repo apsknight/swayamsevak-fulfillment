@@ -20,7 +20,7 @@ def index():
 def webhook():
     content = json.loads(request.data)
 
-    print (content)
+    print (json.dumps(content,indent=2))
 
     try:
         intentName = content['result']['metadata']['intentName']
@@ -29,8 +29,12 @@ def webhook():
 
     if intentName == 'Doctors':
         return jsonify(handle_all_doctors())
+    elif intentName == 'videoCall':
+        return jsonify(handle_video_call())
+    elif intentName == 'doctorFee':
+        return jsonify(handle_fee_doctors(content['result']['parameters']['name']))
     elif intentName == 'GetSchedule':
-    	return jsonify(handle_schedule_doctors(content['result']['metadata']['intentName']))
+        return jsonify(handle_schedule_doctors(content['result']['parameters']['name']))
 
 # run the app
 if __name__ == '__main__':
