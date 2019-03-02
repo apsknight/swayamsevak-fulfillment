@@ -34,6 +34,7 @@ def handle_all_doctors():
 
     template = {
         "speech": "These are all the doctors in the hospital",
+        "displayText": "No",
         "messages": [{
             "type": "carousel_card",
             "items": [
@@ -97,6 +98,7 @@ def handle_all_Beds(type):
 
     template = {
         "speech": "These are the beds satisfying your requirement",
+        "displayText": "No",
         "messages": [{
             "type": "carousel_card",
             "items": [
@@ -150,6 +152,7 @@ def handle_doctors_contact(name):
 
     template = {
         "speech": "This is the contact information of the doctor. You can click on the button to compose a mail",
+        "displayText": "No",
         "messages": [{
             "type": "basic_card",
             "heading": item['name'],
@@ -173,6 +176,7 @@ def handle_department_doctors(dept):
 
     template = {
         "speech": "These are the doctors in "+dept,
+        "displayText": "No",
         "messages": [{
             "type": "carousel_card",
             "items": [
@@ -232,6 +236,7 @@ def handle_schedule_doctors(name):
 
     template = {
         "speech": response['data'][0]['name']+" is available on the following days",
+        "displayText": "No",
         "messages": [{
             "type": "carousel_card",
             "items": [
@@ -292,6 +297,7 @@ def handle_schedule_doctors(name):
 def handle_video_call():
     return{
         "speech": "Click on the button to start, when you are ready",
+        "displayText": "No",
         "messages": [{
             "type": "basic_card",
             "heading": "Customer Support",
