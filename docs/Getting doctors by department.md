@@ -11,6 +11,4 @@ The JSON response returned is of the format:</br>
 4. room: Which room the doctor is sitting in
 5. status: *1* or *0*, based on whether the doctor is on duty or off duty.
 
-![alt text][logo]
-
-[logo]: https://github.com/apsknight/swayamsevak-fulfillment/tree/master/images/API1.png "Result of API 1"
+<img src="https://github.com/apsknight/swayamsevak-fulfillment/tree/master/images/API1.png">
