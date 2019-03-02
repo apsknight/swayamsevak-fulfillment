@@ -87,7 +87,7 @@ def handle_all_doctors():
     #     "source": "flask",
     # }
 
-def handle_all_Beds():
+def handle_all_Beds(type):
     endpoint = base_url + 'allBeds.php'
     response = json.loads(requests.get(endpoint).text)
     
@@ -102,14 +102,25 @@ def handle_all_Beds():
         }]
     }  
 
-    for item in response['data']:
-        data = {
-            "heading": item['roomtype'],
-            "status": item['status'],
-            "title1": "BedNo: "+item['bedno'],
-            "title2": "Charges: "+item['charges']
-        }
-        template['messages'][0]['items'].append(data)
+    if type=="":
+        for item in response['data']:
+            data = {
+                "heading": item['roomtype'],
+                "status": item['status'],
+                "title1": "BedNo: "+item['bedno'],
+                "title2": "Charges: "+item['charges']
+            }
+            template['messages'][0]['items'].append(data)
+    else:
+          for item in response['data']:
+            if item['roomtype']==type:
+                data = {
+                    "heading": item['roomtype'],
+                    "status": item['status'],
+                    "title1": "BedNo: "+item['bedno'],
+                    "title2": "Charges: "+item['charges']
+                }
+                template['messages'][0]['items'].append(data)      
 
     return template
 
@@ -121,7 +132,7 @@ def handle_patient_appointments(name):
         return handle_status_error()
 
     template = {
-        "speech": "Your id is "+response['data'][0]['id']+"and appointment is on "+response['data'][0]['date']+" with doctor "+
+        "speech": "Your id is "+response['data'][0]['id']+"and appointment is on "+response['data'][0]['date']
     }
 
     return template
@@ -138,9 +149,13 @@ def handle_doctors_contact(name):
     template = {
         "messages": [{
             "type": "basic_card",
-            "title": item['name'],
-            "subtitle": "Mobile: "+item['mobile'],
-            "formattedText": "Email: "+item['email']
+            "heading": item['name'],
+            "title1": "Mobile: "+item['mobile'],
+            "title2": "Email: "+item['email'],
+            "button": {
+                "title": "Mail Doctor",
+                "uri": "mailto:"+item['email']
+            }
         }]
     }
 
@@ -271,15 +286,27 @@ def handle_schedule_doctors(name):
     return template 
 
 def handle_video_call():
-
-    template = {
+    return{
         "messages": [{
             "type": "basic_card",
-            "title": "Customer Support",
+            "heading": "Customer Support",
+            "title1": "Here you go",
             "button": {
                 "title": "Call",
                 "uri": "https://18.223.16.181:4443/?call=1220&number=20"
             }
         }]
     }     
-    return template
+
+def handle_help():
+    return{
+        "speech":  "Provide you with a list of doctors in a department.\n\
+                    Provide you with the schedule of a doctor.\n\
+                    Tell the fee of a doctor.\n\
+                    Give you the contact details of a doctor.\n\
+                    Check availability of a medicine.\n\
+                    Give you details of beds availability and charges.\n\
+                    Check your next appointment.\n\
+                    Connect you via video call to the support staff.\n"
+    }
+

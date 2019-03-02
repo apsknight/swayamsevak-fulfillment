@@ -20,21 +20,37 @@ def index():
 def webhook():
     content = json.loads(request.data)
 
-    print (json.dumps(content,indent=2))
+    # print (json.dumps(content, indent=2))
 
-    try:
-        intentName = content['result']['metadata']['intentName']
-    except KeyError as e:
-        return jsonify(handle_key_error(e))
+    intentName = content['result']['metadata']['intentName']
+    name=""
+
+    if 'name' in content['result']['parameters']:
+        name = content['result']['parameters']['name']
+
+    print (intentName)
 
     if intentName == 'Doctors':
         return jsonify(handle_all_doctors())
+
     elif intentName == 'videoCall':
+        print ("came here")
         return jsonify(handle_video_call())
+
     elif intentName == 'doctorFee':
-        return jsonify(handle_fee_doctors(content['result']['parameters']['name']))
+        return jsonify(handle_fee_doctors(name))
+
     elif intentName == 'GetSchedule':
-        return jsonify(handle_schedule_doctors(content['result']['parameters']['name']))
+        return jsonify(handle_schedule_doctors(name))
+
+    elif intentName == 'doctorContact':
+        return jsonify(handle_doctors_contact(name))
+
+    elif intentName == 'bedCheck':
+        return jsonify(handle_all_Beds(name))
+
+    elif intentName == 'Help':
+        return jsonify(handle_help())
 
 # run the app
 if __name__ == '__main__':
