@@ -305,7 +305,7 @@ def handle_video_call():
             "title1": "Here you go",
             "button": {
                 "title": "Call",
-                "uri": "https://18.223.16.181:4443/?call=500"
+                "uri": "https://18.219.76.60:4443/?call=831"
             }
         }]
     }     
