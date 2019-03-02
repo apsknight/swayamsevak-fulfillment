@@ -4,6 +4,7 @@ generate responses to be sent as Dialogflow fulfillment.
 """
 # import general dependencies
 import requests, json
+import datetime
 
 # import Response Generator library
 import df_response_lib
@@ -321,3 +322,27 @@ def handle_help():
                     Connect you via video call to the support staff.\n"
     }
 
+def handle_broadcast():
+    endpoint = base_url + 'broadcast.php?'
+    response = json.loads(requests.get(endpoint).text)
+    
+    if response['status'] != 1:
+        return {}
+
+    template = {
+        "speech": "You got a new announcement",
+        "displayText": "No",
+        "messages": []
+    } 
+
+    for item in response['data']:
+        print (datetime.datetime.now().strftime("%H:%M:%S")+" "+item['mtime'])
+        if datetime.datetime.now().strftime("%H:%M:%S")>=item['mtime']:
+            print ("Entered")
+            data = {
+                "type": "broadcast_card",
+                "announcement": item['mdata']
+            }
+            template['messages'].append(data)
+
+    return template

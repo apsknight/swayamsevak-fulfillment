@@ -54,6 +54,9 @@ def webhook():
     elif intentName == 'departmentDoctors':
         return jsonify(handle_department_doctors(name))
 
+    elif intentName == 'Broadcast':
+        return jsonify(handle_broadcast())
+
 # run the app
 if __name__ == '__main__':
     app.run()
