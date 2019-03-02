@@ -1,6 +1,6 @@
 **Functionality 1**</br>
 Try saying any one of the following phrases for getting help from the bot regarding things it can do:</br>
-**Help** , <b>What can you do?</b> , <b>I need help</b></br>
+**Help**, <b>What can you do?</b>, <b>I need help</b></br>
 You will get a list of the various functionalities the chatbot can perform, which are:</br>
 1. Finding all the doctors present within the hospital.
 2. Finding the schedule of a doctor by name.
