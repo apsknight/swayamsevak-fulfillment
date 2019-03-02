@@ -28,13 +28,12 @@ def webhook():
     if 'name' in content['result']['parameters']:
         name = content['result']['parameters']['name']
 
-    print (intentName)
+    print ("Indent: "+intentName)
 
     if intentName == 'Doctors':
         return jsonify(handle_all_doctors())
 
     elif intentName == 'videoCall':
-        print ("came here")
         return jsonify(handle_video_call())
 
     elif intentName == 'doctorFee':
