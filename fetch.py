@@ -204,7 +204,7 @@ def handle_fee_doctors(name):
         return handle_status_error()
 
     template = {
-        "speech": "His fees is "+response['data'][0]['fees']
+        "speech": "His fees is ₹ "+response['data'][0]['fees']
     }
 
     return template
@@ -305,7 +305,7 @@ def handle_video_call():
             "title1": "Here you go",
             "button": {
                 "title": "Call",
-                "uri": "https://18.223.16.181:4443/?call=1220&number=20"
+                "uri": "https://18.223.16.181:4443/?call=500"
             }
         }]
     }     
