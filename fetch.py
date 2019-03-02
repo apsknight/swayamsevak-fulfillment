@@ -45,7 +45,7 @@ def handle_all_doctors():
         data = {
             "heading": item['name'],
             "status": item['status'],
-            "title1": "Phone: "+item['phone'],
+            "title1": "Department: "+item['department'],
             "title2": "Room: "+item['room']
         }
         template['messages'][0]['items'].append(data)
