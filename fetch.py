@@ -311,15 +311,42 @@ def handle_video_call():
     }     
 
 def handle_help():
-    return{
-        "speech":  "Provide you with a list of doctors in a department.\n\
-                    Provide you with the schedule of a doctor.\n\
-                    Tell the fee of a doctor.\n\
-                    Give you the contact details of a doctor.\n\
-                    Check availability of a medicine.\n\
-                    Give you details of beds availability and charges.\n\
-                    Check your next appointment.\n\
-                    Connect you via video call to the support staff.\n"
+     return{
+        "speech": "These are the things I can do!",
+        "messages": [
+        {
+            "type":"simple",
+            "speech":"Provide you with a list of doctors in a department."
+        },
+        {
+            "type":"simple",
+            "speech":"Provide you with the schedule of a doctor."
+        },
+        {
+            "type":"simple",
+            "speech":"Tell the fee of a doctor."
+        },
+        {
+            "type":"simple",
+            "speech":"Give you the contact details of a doctor."
+        },
+        {
+            "type":"simple",
+            "speech":"Check availability of a medicine."
+        },
+        {
+            "type":"simple",
+            "speech":"Give you details of beds availability and charges."
+        },
+        {
+            "type":"simple",
+            "speech":"Check your next appointment."
+        }, 
+         {
+            "type":"simple",
+            "speech":"Connect you via video call to the support staff."
+        },             
+        ]
     }
 
 def handle_broadcast():
@@ -330,7 +357,6 @@ def handle_broadcast():
         return {}
 
     template = {
-        "speech": "You got a new announcement",
         "displayText": "No",
         "messages": []
     } 
