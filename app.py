@@ -7,6 +7,8 @@ from flask import Flask, jsonify, request
 # import response functions for intent requests
 from fetch import *
 
+map = dict()
+
 # initialize the flask app
 app = Flask(__name__)
 
@@ -24,6 +26,7 @@ def webhook():
 
     intentName = content['result']['metadata']['intentName']
     name=""
+    session_id = content['sessionId']
 
     if 'name' in content['result']['parameters']:
         name = content['result']['parameters']['name']
@@ -55,7 +58,7 @@ def webhook():
         return jsonify(handle_department_doctors(name))
 
     elif intentName == 'Broadcast':
-        return jsonify(handle_broadcast())
+        return jsonify(handle_broadcast(map,session_id))
 
 # run the app
 if __name__ == '__main__':

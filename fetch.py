@@ -349,7 +349,7 @@ def handle_help():
         ]
     }
 
-def handle_broadcast():
+def handle_broadcast(map,session_id):
     endpoint = base_url + 'broadcast.php?'
     response = json.loads(requests.get(endpoint).text)
     
@@ -361,10 +361,14 @@ def handle_broadcast():
         "messages": []
     } 
 
+    # print ("Map")
+    # print (map)
+
     for item in response['data']:
-        print (datetime.datetime.now().strftime("%H:%M:%S")+" "+item['mtime'])
-        if datetime.datetime.now().strftime("%H:%M:%S")>=item['mtime']:
-            print ("Entered")
+        # print (datetime.datetime.now().strftime("%H:%M:%S")+" "+item['mtime'])
+        if datetime.datetime.now().strftime("%H:%M:%S")>=item['mtime'] and map.get(session_id,'0')<item['id']:
+            map[session_id]=item['id']
+            # print("Got "+session_id+" for "+item['id'])
             data = {
                 "type": "broadcast_card",
                 "announcement": item['mdata']
