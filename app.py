@@ -30,6 +30,14 @@ def webhook():
 
     if 'name' in content['result']['parameters']:
         name = content['result']['parameters']['name']
+    if 'dob' in content['result']['parameters']:
+        dob = content['result']['parameters']['dob']
+    if 'sex' in content['result']['parameters']:
+        sex = content['result']['parameters']['sex']   
+    if 'docname' in content['result']['parameters']:
+        docname = content['result']['parameters']['docname']  
+    if 'time' in content['result']['parameters']:
+        time = content['result']['parameters']['time'] 
 
     print ("Indent: "+intentName)
 
@@ -59,6 +67,12 @@ def webhook():
 
     elif intentName == 'Broadcast':
         return jsonify(handle_broadcast(map,session_id))
+
+    elif intentName == 'Register':
+        return jsonify(handle_registration(name,dob,sex))
+
+    elif intentName == 'makeAppointment':
+        return jsonify(handle_appointment(name,docname,time))
 
 # run the app
 if __name__ == '__main__':

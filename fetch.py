@@ -160,8 +160,10 @@ def handle_doctors_contact(name):
             "title1": "Mobile: "+item['mobile'],
             "title2": "Email: "+item['email'],
             "button": {
-                "title": "Mail Doctor",
-                "uri": "mailto:"+item['email']
+                "title1": "Mail Doctor",
+                "uri1": "mailto:"+item['email'],
+                "title2": "Call Doctor",
+                "uri2": "tel:"+item['mobile']
             }
         }]
     }
@@ -304,8 +306,8 @@ def handle_video_call():
             "heading": "Customer Support",
             "title1": "Here you go",
             "button": {
-                "title": "Call",
-                "uri": "https://18.219.76.60:4443/?call=831"
+                "title1": "Call",
+                "uri1": "https://18.219.76.60:4443/?call=831"
             }
         }]
     }     
@@ -359,10 +361,7 @@ def handle_broadcast(map,session_id):
     template = {
         "displayText": "No",
         "messages": []
-    } 
-
-    # print ("Map")
-    # print (map)
+    }
 
     for item in response['data']:
         # print (datetime.datetime.now().strftime("%H:%M:%S")+" "+item['mtime'])
@@ -376,3 +375,27 @@ def handle_broadcast(map,session_id):
             template['messages'].append(data)
 
     return template
+
+def handle_register(name, dob, sex):
+    endpoint = base_url + 'register.php?name='+name+'&dob='+dob+'&sex='+sex
+    response = json.loads(requests.get(endpoint).text)
+
+    if response['status'] != 1:
+        handle_status_error()
+
+    return{
+        "speech": "Registration Successful"
+    }
+
+def handle_register(name, docname, time):
+    endpoint = base_url + 'appointment.php?name='+name+'&docname='+docname+'&time='+time
+    response = json.loads(requests.get(endpoint).text)
+
+    if response['status'] != 1:
+        return{
+            "speech": "Slot Not free, try another slot"
+        }
+
+    return{
+        "speech": "Registration Successful"
+    }
