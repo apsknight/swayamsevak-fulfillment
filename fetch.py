@@ -307,7 +307,7 @@ def handle_video_call():
             "title1": "Here you go",
             "button": {
                 "title1": "Call",
-                "uri1": "https://madhavchoudhary.github.io/swayamsevak-call/Basic%20Video%20Chat/"
+                "uri1": "https://appear.in/swayamsevak"
             }
         }]
     }     
