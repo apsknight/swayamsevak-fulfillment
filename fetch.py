@@ -191,7 +191,7 @@ def handle_department_doctors(dept):
         data = {
             "heading": item['name'],
             "status": item['status'],
-            "title1": "Phone: "+item['phone'],
+            "title1": "Phone: "+str(item['phone']),
             "title2": "Room: "+item['room']
         }
         template['messages'][0]['items'].append(data)
@@ -307,7 +307,7 @@ def handle_video_call():
             "title1": "Here you go",
             "button": {
                 "title1": "Call",
-                "uri1": "https://18.219.76.60:4443/?call=831"
+                "uri1": "https://videolink2me.com/#34f842a3"
             }
         }]
     }     
