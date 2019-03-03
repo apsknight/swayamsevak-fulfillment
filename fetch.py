@@ -318,7 +318,7 @@ def handle_help():
         "messages": [
         {
             "type":"simple",
-            "speech":"Provide you with a list of doctors in a department."
+            "speech":"Provide you with a list of doctors."
         },
         {
             "type":"simple",
